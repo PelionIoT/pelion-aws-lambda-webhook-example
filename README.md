@@ -47,7 +47,7 @@ Choose these settings:
 
 - Deployment type
   - Deployment type: Development and testing
-  - Elasticsearch Version: 7.9
+  - Elasticsearch Version: 7.9 or greater *(note that it has only been tested with 7.9)* 
 - Configure Domain
   - Elasticsearch domain name: *Any name you choose (e.g. pelion-data)* 
   - Instance type: t2.small.elasticsearch
@@ -168,6 +168,10 @@ PUT /registrations
 
 ### Pelion Cloud REST API
 
+Now that your AWS account is configured to receive notification messages, you must configure Pelion to generate and send the messages to the right place. This is done by setting up a callback URL and subscribing to specific resources in your Pelion account. Once this is completed, the messages will start to flow.
+
+In this section, we will use *cURL* to send *HTTPS* commands to configure our Pelion account. Alternatively, you could use other tools or software libraries to do the job. 
+
 - Log in to the [Pelion Device Management portal](https://portal.mbedcloud.com/login).
 - Follow [this guide](https://developer.pelion.com/docs/device-management/current/user-account/application-access-keys.html) to create a new application access key. 
 - From a command terminal execute:
@@ -186,7 +190,7 @@ Where `PELION_API_KEY` is the access key from Pelion Device Management portal, `
 
 If all goes well, you should get a **204** response back.
 
-- Next, enable pre-subscriptions for LwM2M resources that you want to be stored in Elasticsearch:
+- Next, enable pre-subscriptions for LwM2M resources that you want to be sent to Elasticsearch. Subscriptions and pre-subscription can be managed with the [v2/subscriptions](https://developer.pelion.com/docs/device-management-api/connect/#/Device%20data%20-%20subscriptions) REST API endpoint on Pelion.
 
 Replace `/object/instance/resource` with a resource that your device application has enabled for GET operations. For example, if your devices are running the [mbed-os-example-application](https://github.com/armmbed/mbed-os-example-pelion), then you can use **3200/0/5501**, which is a digital counter that updates once a second.
 
